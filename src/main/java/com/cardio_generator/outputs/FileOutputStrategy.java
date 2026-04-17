@@ -7,11 +7,20 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ *  This class implements the OutputStrategy interface to write generated data to files.
+ */
 public class FileOutputStrategy implements OutputStrategy {
 
     // Changed variable name to lowerCamelCase.
     private String baseDirectory;
 
+    /**
+     * Constructor for FileOutputStrategy. Initialises the base directory where
+     * files will be written.
+     * 
+     * @param baseDirectory the directory where files will be written.
+     */
     public FileOutputStrategy(String baseDirectory) {
         this.baseDirectory = baseDirectory; // Vertical space removed as did not improve readability.
     }
@@ -20,6 +29,15 @@ public class FileOutputStrategy implements OutputStrategy {
     // Moved fileMap declaration closer to the point it is first used as per 4.8.2.2 in Guide.
     public final ConcurrentHashMap<String, String> fileMap = new ConcurrentHashMap<>();
 
+    /**
+     * Outputs the generated data to a chosen file.
+     * 
+     * @param patientId the ID of the patient for whom the data is generated.
+     * @param timestamp the timestamp of the generated data.
+     * @param label the label for the generated data.
+     * @param data the generated data.
+     * @throws IOException if an error occurs while creating or writing tothe file.
+     */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
         try {
