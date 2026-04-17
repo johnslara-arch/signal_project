@@ -14,7 +14,7 @@ class DataStorageTest {
     void testAddAndGetRecords() {
         // TODO Perhaps you can implement a mock data reader to mock the test data?
         // DataReader reader
-        DataStorage storage = new DataStorage(reader);
+        DataStorage storage = new DataStorage();
         storage.addPatientData(1, 100.0, "WhiteBloodCells", 1714376789050L);
         storage.addPatientData(1, 200.0, "WhiteBloodCells", 1714376789051L);
 
