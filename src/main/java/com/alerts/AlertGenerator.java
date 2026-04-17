@@ -10,6 +10,8 @@ import com.data_management.Patient;
  * it against specific health criteria.
  */
 public class AlertGenerator {
+
+    // Added vertical space to improve readability.
     private DataStorage dataStorage;
 
     /**
@@ -24,13 +26,12 @@ public class AlertGenerator {
         this.dataStorage = dataStorage;
     }
 
+    // Remove the extra lines from the JavaDoc comment below.
     /**
      * Evaluates the specified patient's data to determine if any alert conditions
-     * are met. If a condition is met, an alert is triggered via the
-     * {@link #triggerAlert}
+     * are met. If a condition is met, an alert is triggered via the {@link #triggerAlert}
      * method. This method should define the specific conditions under which an
-     * alert
-     * will be triggered.
+     * alert will be triggered.
      *
      * @param patient the patient data to evaluate for alert conditions
      */
