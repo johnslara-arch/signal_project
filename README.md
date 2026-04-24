@@ -70,4 +70,5 @@ Student ID: 6448840
 
 ## UML Class Diagrams
 
-Four UML Class diagrams that represent the Alert Generation System, Data Storage System, Patient Identification System, and the Data Access Layer can be found in the directory 
+Four UML Class diagrams that represent the Alert Generation System, Data Storage System, Patient Identification System, and the Data Access Layer can be found in the uml_models directory.
+https://github.com/johnslara-arch/signal_project/tree/master/uml_models
