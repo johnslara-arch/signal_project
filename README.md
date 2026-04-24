@@ -67,3 +67,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Project Member
 
 Student ID: 6448840
+
+## UML Class Diagrams
+
+Four UML Class diagrams that represent the Alert Generation System, Data Storage System, Patient Identification System, and the Data Access Layer can be found in the directory 

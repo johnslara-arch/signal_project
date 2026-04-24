@@ -1,0 +1,1 @@
+The main DataStorage interface writes new patient data to the map it has created. It calls DataRetriever when a patient or medical staff wants to access stored values. Through its update() method it calls DataDeletion to remove unwanted records (old, irrelevant...). The DataDeletion class could be made into an interface for various deletion strategies.
