@@ -68,7 +68,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Student ID: 6448840
 
+## Runnable Jar
+
+A runnable jar file obtained by running 'mvn clean package' can be found in the [bin](https://github.com/johnslara-arch/signal_project/tree/master/bin) directory.
+
 ## UML Class Diagrams
 
-Four UML Class diagrams that represent the Alert Generation System, Data Storage System, Patient Identification System, and the Data Access Layer can be found in the uml_models directory.
-https://github.com/johnslara-arch/signal_project/tree/master/uml_models
+Four UML Class diagrams that represent the Alert Generation System, Data Storage System, Patient Identification System, and the Data Access Layer can be found in the [uml_models](https://github.com/johnslara-arch/signal_project/tree/master/uml_models) directory.
+
+## Code Coverage Report
+
+A code coverage report of the unit tests added for Part 3 of the project can be found in the [Code_coverage_and_unit_tests](https://github.com/johnslara-arch/signal_project/tree/master/Code_coverage_and_unit_tests) directory.
