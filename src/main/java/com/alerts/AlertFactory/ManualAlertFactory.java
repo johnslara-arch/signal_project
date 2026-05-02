@@ -1,7 +1,7 @@
 package com.alerts.AlertFactory;
 
 import com.alerts.Alerts.Alert;
-import com.alerts.Alerts.ManualAlert;
+import com.alerts.Alerts.AlertTypes.ManualAlert;
 
 public class ManualAlertFactory implements AlertFactory {
 

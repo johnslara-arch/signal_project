@@ -1,7 +1,7 @@
 package com.alerts.AlertFactory;
 
 import com.alerts.Alerts.Alert;
-import com.alerts.Alerts.HypotensiveHypoxemiaAlert;
+import com.alerts.Alerts.AlertTypes.HypotensiveHypoxemiaAlert;
 
 public class HypotensiveHypoxemiaAlertFactory implements AlertFactory {
 

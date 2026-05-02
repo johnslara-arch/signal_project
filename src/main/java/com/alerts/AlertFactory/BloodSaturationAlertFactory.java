@@ -1,7 +1,7 @@
 package com.alerts.AlertFactory;
 
 import com.alerts.Alerts.Alert;
-import com.alerts.Alerts.BloodSaturationAlert;
+import com.alerts.Alerts.AlertTypes.BloodSaturationAlert;
 
 public class BloodSaturationAlertFactory implements AlertFactory {
 

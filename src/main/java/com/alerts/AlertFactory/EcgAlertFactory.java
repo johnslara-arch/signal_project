@@ -1,7 +1,7 @@
 package com.alerts.AlertFactory;
 
 import com.alerts.Alerts.Alert;
-import com.alerts.Alerts.EcgAlert;
+import com.alerts.Alerts.AlertTypes.EcgAlert;
 
 public class EcgAlertFactory implements AlertFactory {
 

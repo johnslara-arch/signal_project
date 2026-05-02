@@ -1,7 +1,7 @@
 package com.alerts.AlertFactory;
 
 import com.alerts.Alerts.Alert;
-import com.alerts.Alerts.BloodPressureAlert;
+import com.alerts.Alerts.AlertTypes.BloodPressureAlert;
 
 public class BloodPressureAlertFactory implements AlertFactory {
 

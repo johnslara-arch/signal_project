@@ -23,4 +23,8 @@ public class Alert {
     public long getTimestamp() {
         return timestamp;
     }
+
+    public String getAlertType() {
+        return "Alert";
+    }
 }
