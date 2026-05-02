@@ -1,8 +1,8 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 
-import com.alerts.Alert;
 import com.alerts.AlertGenerator;
+import com.alerts.Alerts.Alert;
 import com.data_management.DataStorage;
 
 import java.util.List;
