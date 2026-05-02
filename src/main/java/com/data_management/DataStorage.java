@@ -13,14 +13,36 @@ import com.alerts.AlertGenerator;
  * patient IDs.
  */
 public class DataStorage {
+    private static DataStorage instance;
     private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
     /**
      * Constructs a new instance of DataStorage, initializing the underlying storage
      * structure.
      */
-    public DataStorage() {
+    private DataStorage() {
         this.patientMap = new HashMap<>();
+    }
+
+    /**
+     * This method ensures Singleton design pattern as it only
+     * creates a new instance of the {@code DataStorage} if none exists.
+     * 
+     * @return new or existing instance of {@code DataStorage}.
+     */
+    public static DataStorage getInstance() {
+        if (instance == null) {
+            instance = new DataStorage();
+        }
+        return instance;
+    }
+
+    /**
+     * This method is only used for testing. It is used to reset
+     * Data Storage before each unit test is carried out.
+     */
+    public static void resetInstance() {
+        instance = null;
     }
 
     /**

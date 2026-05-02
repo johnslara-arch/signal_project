@@ -76,6 +76,7 @@ A runnable jar file obtained by running 'mvn clean package' can be found in the 
 
 Four UML Class diagrams that represent the Alert Generation System, Data Storage System, Patient Identification System, and the Data Access Layer can be found in the [uml_models](https://github.com/johnslara-arch/signal_project/tree/master/uml_models) directory.
 
-## Code Coverage Report
+## Code Coverage Report and Unit Tests
 
-A code coverage report of the unit tests added for Part 3 of the project can be found in the [Code_coverage_and_unit_tests](https://github.com/johnslara-arch/signal_project/tree/master/Code_coverage_and_unit_tests) directory.
+A code coverage report of the unit tests added for Part 3 of the project can be found in the [Code_coverage_and_unit_tests](https://github.com/johnslara-arch/signal_project/tree/master/Code_coverage_and_unit_tests) directory. This directory also contains screenshots proving the 
+successful completion of all unit tests.

@@ -46,8 +46,9 @@ public class BloodPressureStrategyTests {
 
     @BeforeEach
     void setUp() {
-        storage = new DataStorage();
-        spy = new SpyStrategy();
+        DataStorage.resetInstance();
+        this.storage = DataStorage.getInstance();
+        this.spy = new SpyStrategy();
     }
 
     @Test

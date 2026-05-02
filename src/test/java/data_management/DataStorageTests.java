@@ -15,7 +15,8 @@ class DataStorageTests {
 
     @BeforeEach
     void setUp() {
-        this.storage = new DataStorage();
+        DataStorage.resetInstance();
+        this.storage = DataStorage.getInstance();
     }
 
     @Test

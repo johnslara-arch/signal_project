@@ -26,16 +26,32 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
- *  Represents a health data simulator. It schedules various types of health data such as ECG data to be 
- *  generated for a specified number of patients and output strategy. Specifies these parameters through command-
- *  line arguments.
+ * Represents a health data simulator. It schedules various types of health data
+ * such as ECG data to be
+ * generated for a specified number of patients and output strategy. Specifies
+ * these parameters through command-
+ * line arguments.
  */
 public class HealthDataSimulator {
 
+    private static HealthDataSimulator instance;
     private static int patientCount = 50; // Default number of patients
     private static ScheduledExecutorService scheduler;
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
+
+    /**
+     * This method ensures Singleton design pattern as it only
+     * creates a new instance of this simulator if none exists.
+     * 
+     * @return new or existing instance of simulator.
+     */
+    public static HealthDataSimulator getInstance() {
+        if (instance == null) {
+            instance = new HealthDataSimulator();
+        }
+        return instance;
+    }
 
     /**
      * Main method to start the Health Data Simulator. It generates patient IDs
@@ -124,7 +140,8 @@ public class HealthDataSimulator {
     }
 
     /**
-     * Prints a help message to the console, detailing how to input specific arguments to configure the simulator.
+     * Prints a help message to the console, detailing how to input specific
+     * arguments to configure the simulator.
      */
     private static void printHelp() {
         System.out.println("Usage: java HealthDataSimulator [options]");
@@ -158,11 +175,14 @@ public class HealthDataSimulator {
     }
 
     /**
-     * Schedules tasks for each patient in the list of patient IDs. These tasks generate:
-     * ECG data, blood saturation data, blood pressure data, blood levels data, and alerts 
+     * Schedules tasks for each patient in the list of patient IDs. These tasks
+     * generate:
+     * ECG data, blood saturation data, blood pressure data, blood levels data, and
+     * alerts
      * at specified intervals.
      * 
-     * @param patientIds a list of integer patient IDs for which to schedule data generation tasks.
+     * @param patientIds a list of integer patient IDs for which to schedule data
+     *                   generation tasks.
      */
     private static void scheduleTasksForPatients(List<Integer> patientIds) {
         ECGDataGenerator ecgDataGenerator = new ECGDataGenerator(patientCount);
@@ -184,8 +204,8 @@ public class HealthDataSimulator {
      * Schedules a task with a random initial delay so they are not all executed
      * at the same time.
      * 
-     * @param task the Runnable task to be scheduled.
-     * @param period the period between successive executions of the task.
+     * @param task     the Runnable task to be scheduled.
+     * @param period   the period between successive executions of the task.
      * @param timeUnit the time unit of the period and delay parameters.
      */
     private static void scheduleTask(Runnable task, long period, TimeUnit timeUnit) {
