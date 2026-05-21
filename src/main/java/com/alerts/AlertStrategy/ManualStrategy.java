@@ -1,9 +1,11 @@
 package com.alerts.AlertStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.alerts.AlertFactory.AlertFactory;
 import com.alerts.AlertFactory.ManualAlertFactory;
+import com.alerts.Alerts.Alert;
 import com.data_management.PatientRecord;
 
 /**
@@ -20,16 +22,19 @@ public class ManualStrategy extends HelpersAlertStrategy {
     private final AlertFactory manualAlertFactory = new ManualAlertFactory();
 
     @Override
-    public void checkAlert(List<PatientRecord> allRecords) {
+    public List<Alert> checkAlert(List<PatientRecord> allRecords) {
+        List<Alert> alerts = new ArrayList<>();
         List<PatientRecord> alertRecords = filterByType(allRecords, "Alert");
 
         for (PatientRecord record : alertRecords) {
             if (record.getMeasurementValue() == 1.0) {
-                triggerAlert(
+                alerts.add(
                         manualAlertFactory.createAlert(String.valueOf(record.getPatientId()), "Manual Alert triggered",
                                 record.getTimestamp()));
             }
         }
+
+        return alerts;
     }
 
 }

@@ -1,9 +1,11 @@
 package com.alerts.AlertStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.alerts.AlertFactory.AlertFactory;
 import com.alerts.AlertFactory.BloodPressureAlertFactory;
+import com.alerts.Alerts.Alert;
 import com.data_management.PatientRecord;
 
 public class BloodPressureStrategy extends HelpersAlertStrategy {
@@ -22,14 +24,17 @@ public class BloodPressureStrategy extends HelpersAlertStrategy {
      * @param allRecords patient records retrieved from {@DataStorage}.
      */
     @Override
-    public void checkAlert(List<PatientRecord> allRecords) {
+    public List<Alert> checkAlert(List<PatientRecord> allRecords) {
+        List<Alert> alerts = new ArrayList<>();
         List<PatientRecord> systolicRecords = filterByType(allRecords, "SystolicPressure");
         List<PatientRecord> diastolicRecords = filterByType(allRecords, "DiastolicPressure");
 
-        checkBpTrendAlert(systolicRecords, "Systolic");
-        checkBpTrendAlert(diastolicRecords, "Diastolic");
-        checkBpCriticalThresholds(systolicRecords, 90, 180, "Systolic");
-        checkBpCriticalThresholds(diastolicRecords, 60, 120, "Diastolic");
+        alerts.addAll(checkBpTrendAlert(systolicRecords, "Systolic"));
+        alerts.addAll(checkBpTrendAlert(diastolicRecords, "Diastolic"));
+        alerts.addAll(checkBpCriticalThresholds(systolicRecords, 90, 180, "Systolic"));
+        alerts.addAll(checkBpCriticalThresholds(diastolicRecords, 60, 120, "Diastolic"));
+
+        return alerts;
     }
 
     /**
@@ -38,9 +43,10 @@ public class BloodPressureStrategy extends HelpersAlertStrategy {
      * @param records filtered list of BP records (either systolic or diastolic).
      * @param label   type of BP that triggers alert.
      */
-    private void checkBpTrendAlert(List<PatientRecord> records, String label) {
+    private List<Alert> checkBpTrendAlert(List<PatientRecord> records, String label) {
+        List<Alert> alerts = new ArrayList<>();
         if (records.size() < 3) {
-            return;
+            return alerts;
         }
         for (int i = 2; i < records.size(); i++) {
             double reading1 = records.get(i - 2).getMeasurementValue();
@@ -54,13 +60,14 @@ public class BloodPressureStrategy extends HelpersAlertStrategy {
             boolean decreasing = diff1 < -10 && diff2 < -10;
 
             if (increasing) {
-                triggerAlert(bpAlertFactory.createAlert(String.valueOf(records.get(i).getPatientId()),
+                alerts.add(bpAlertFactory.createAlert(String.valueOf(records.get(i).getPatientId()),
                         label + " Blood Pressure shows increasing trend", records.get(i).getTimestamp()));
             } else if (decreasing) {
-                triggerAlert(bpAlertFactory.createAlert(String.valueOf(records.get(i).getPatientId()),
+                alerts.add(bpAlertFactory.createAlert(String.valueOf(records.get(i).getPatientId()),
                         label + " Blood Pressure shows decreasing trend", records.get(i).getTimestamp()));
             }
         }
+        return alerts;
 
     }
 
@@ -73,18 +80,20 @@ public class BloodPressureStrategy extends HelpersAlertStrategy {
      * @param higherBound higher critical threshold for BP.
      * @param label       type of BP that triggers alert.
      */
-    private void checkBpCriticalThresholds(List<PatientRecord> records, double lowerBound, double higherBound,
+    private List<Alert> checkBpCriticalThresholds(List<PatientRecord> records, double lowerBound, double higherBound,
             String label) {
+        List<Alert> alerts = new ArrayList<>();
         for (PatientRecord record : records) {
             double value = record.getMeasurementValue();
             if (value > higherBound) {
-                triggerAlert(bpAlertFactory.createAlert(String.valueOf(record.getPatientId()),
+                alerts.add(bpAlertFactory.createAlert(String.valueOf(record.getPatientId()),
                         label + " Blood Pressure critically high: " + value, record.getTimestamp()));
             } else if (value < lowerBound) {
-                triggerAlert(bpAlertFactory.createAlert(String.valueOf(record.getPatientId()),
+                alerts.add(bpAlertFactory.createAlert(String.valueOf(record.getPatientId()),
                         label + " Blood Pressure critically low: " + value, record.getTimestamp()));
             }
         }
+        return alerts;
     }
 
 }

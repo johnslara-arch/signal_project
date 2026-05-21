@@ -15,40 +15,26 @@ import java.util.List;
 public class BloodPressureStrategyTests {
 
     /**
-     * The following subclass of the concrete strategy class overrides the
-     * triggerAlert method so that alerts produced by the following tests can be
-     * checked.
-     */
-    static class SpyStrategy extends BloodPressureStrategy {
-        final List<Alert> captured = new ArrayList<>();
-
-        @Override
-        protected void triggerAlert(Alert alert) {
-            captured.add(alert);
-        }
-    }
-
-    /**
      * Case insensitive check that examines the kind of alerts the strategy
      * has created.
      * 
-     * @param spy       the SpyStrategy that created the alert.
+     * @param alerts    the list of alerts created by the strategy.
      * @param substring the kind of alert which should be found.
      * 
      * @return true if the expected substring is found in the alert created.
      */
-    private boolean containsCondition(SpyStrategy spy, String substring) {
-        return spy.captured.stream().anyMatch(a -> a.getCondition().toLowerCase().contains(substring.toLowerCase()));
+    private boolean containsCondition(List<Alert> alerts, String substring) {
+        return alerts.stream().anyMatch(a -> a.getCondition().toLowerCase().contains(substring.toLowerCase()));
     }
 
     DataStorage storage;
-    SpyStrategy spy;
+    BloodPressureStrategy strategy;
 
     @BeforeEach
     void setUp() {
         DataStorage.resetInstance();
         this.storage = DataStorage.getInstance();
-        this.spy = new SpyStrategy();
+        this.strategy = new BloodPressureStrategy();
     }
 
     @Test
@@ -79,17 +65,15 @@ public class BloodPressureStrategyTests {
         storage.addPatientData(4, 110, "DiastolicPressure", 3000L);
         List<PatientRecord> records4 = storage.getRecords(4, 0L, 4000L);
 
-        spy.checkAlert(records1);
-        assertTrue(containsCondition(spy, "Increasing Trend"));
+        List<Alert> alerts1 = strategy.checkAlert(records1);
+        List<Alert> alerts2 = strategy.checkAlert(records2);
+        List<Alert> alerts3 = strategy.checkAlert(records3);
+        List<Alert> alerts4 = strategy.checkAlert(records4);
 
-        spy.checkAlert(records2);
-        assertTrue(containsCondition(spy, "Decreasing Trend"));
-
-        spy.checkAlert(records3);
-        assertTrue(containsCondition(spy, "Increasing Trend"));
-
-        spy.checkAlert(records4);
-        assertTrue(containsCondition(spy, "Decreasing Trend"));
+        assertTrue(containsCondition(alerts1, "Increasing Trend"));
+        assertTrue(containsCondition(alerts2, "Decreasing Trend"));
+        assertTrue(containsCondition(alerts3, "Increasing Trend"));
+        assertTrue(containsCondition(alerts4, "Decreasing Trend"));
     }
 
     @Test
@@ -100,8 +84,8 @@ public class BloodPressureStrategyTests {
         storage.addPatientData(1, 130, "SystolicPressure", 3000L);
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
 
-        spy.checkAlert(records);
-        assertFalse(containsCondition(spy, "Increasing Trend"));
+        List<Alert> alerts = strategy.checkAlert(records);
+        assertFalse(containsCondition(alerts, "Increasing Trend"));
     }
 
     @Test
@@ -117,17 +101,15 @@ public class BloodPressureStrategyTests {
         List<PatientRecord> records3 = storage.getRecords(3, 0L, 4000L);
         List<PatientRecord> records4 = storage.getRecords(4, 0L, 4000L);
 
-        spy.checkAlert(records1);
-        assertTrue(containsCondition(spy, "Critically High"));
+        List<Alert> alerts1 = strategy.checkAlert(records1);
+        List<Alert> alerts2 = strategy.checkAlert(records2);
+        List<Alert> alerts3 = strategy.checkAlert(records3);
+        List<Alert> alerts4 = strategy.checkAlert(records4);
 
-        spy.checkAlert(records2);
-        assertTrue(containsCondition(spy, "Critically Low"));
-
-        spy.checkAlert(records3);
-        assertTrue(containsCondition(spy, "Critically High"));
-
-        spy.checkAlert(records4);
-        assertTrue(containsCondition(spy, "Critically Low"));
+        assertTrue(containsCondition(alerts1, "Critically High"));
+        assertTrue(containsCondition(alerts2, "Critically Low"));
+        assertTrue(containsCondition(alerts3, "Critically High"));
+        assertTrue(containsCondition(alerts4, "Critically Low"));
     }
 
     @Test
@@ -137,8 +119,8 @@ public class BloodPressureStrategyTests {
         storage.addPatientData(1, 80, "DiastolicPressure", 1000L);
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
 
-        spy.checkAlert(records);
-        assertFalse(containsCondition(spy, "Critically"));
+        List<Alert> alerts = strategy.checkAlert(records);
+        assertFalse(containsCondition(alerts, "Critically"));
     }
 
 }

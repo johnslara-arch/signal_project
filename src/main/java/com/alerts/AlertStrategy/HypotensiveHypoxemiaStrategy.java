@@ -1,9 +1,11 @@
 package com.alerts.AlertStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.alerts.AlertFactory.AlertFactory;
 import com.alerts.AlertFactory.HypotensiveHypoxemiaAlertFactory;
+import com.alerts.Alerts.Alert;
 import com.data_management.PatientRecord;
 
 public class HypotensiveHypoxemiaStrategy extends HelpersAlertStrategy {
@@ -19,7 +21,8 @@ public class HypotensiveHypoxemiaStrategy extends HelpersAlertStrategy {
      * @param allRecords patient records retrieved from {@DataStorage}.
      */
     @Override
-    public void checkAlert(List<PatientRecord> allRecords) {
+    public List<Alert> checkAlert(List<PatientRecord> allRecords) {
+        List<Alert> alerts = new ArrayList<>();
         List<PatientRecord> systolicRecords = filterByType(allRecords, "Systolic");
         List<PatientRecord> saturationRecords = filterByType(allRecords, "Saturation");
 
@@ -39,13 +42,14 @@ public class HypotensiveHypoxemiaStrategy extends HelpersAlertStrategy {
                 }
 
                 if (saturationRecord.getMeasurementValue() < 92) {
-                    triggerAlert(hhAlertFactory.createAlert(String.valueOf(systolicRecord.getPatientId()),
+                    alerts.add(hhAlertFactory.createAlert(String.valueOf(systolicRecord.getPatientId()),
                             "Hypotensive Hypoxemia Alert!", systolicRecord.getTimestamp()));
                     break;
                 }
             }
 
         }
+        return alerts;
     }
 
 }

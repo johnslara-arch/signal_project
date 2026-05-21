@@ -1,9 +1,11 @@
 package com.alerts.AlertStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.alerts.AlertFactory.AlertFactory;
 import com.alerts.AlertFactory.BloodSaturationAlertFactory;
+import com.alerts.Alerts.Alert;
 import com.data_management.PatientRecord;
 
 public class BloodSaturationStrategy extends HelpersAlertStrategy {
@@ -20,7 +22,9 @@ public class BloodSaturationStrategy extends HelpersAlertStrategy {
      * @param allRecords patient records retrieved from {@DataStorage}.
      */
     @Override
-    public void checkAlert(List<PatientRecord> allRecords) {
+    public List<Alert> checkAlert(List<PatientRecord> allRecords) {
+
+        List<Alert> alerts = new ArrayList<>();
 
         List<PatientRecord> saturationRecords = filterByType(allRecords, "Saturation");
 
@@ -30,7 +34,7 @@ public class BloodSaturationStrategy extends HelpersAlertStrategy {
                                                                            // such as 95%.
 
             if (value < 92) {
-                triggerAlert(satAlertFactory.createAlert(String.valueOf(saturationRecords.get(i).getPatientId()),
+                alerts.add(satAlertFactory.createAlert(String.valueOf(saturationRecords.get(i).getPatientId()),
                         "Low Blood Saturation detected: " + value + "%", saturationRecords.get(i).getTimestamp()));
             }
 
@@ -42,13 +46,16 @@ public class BloodSaturationStrategy extends HelpersAlertStrategy {
 
                 double oldValue = saturationRecords.get(j).getMeasurementValue();
                 if (oldValue - value >= 5) {
-                    triggerAlert(satAlertFactory.createAlert(String.valueOf(saturationRecords.get(i).getPatientId()),
+                    alerts.add(satAlertFactory.createAlert(String.valueOf(saturationRecords.get(i).getPatientId()),
                             "Rapid Blood Saturation drop from " + oldValue + "% to" + value,
                             saturationRecords.get(i).getTimestamp()));
                     break;
                 }
             }
+
         }
+
+        return alerts;
     }
 
 }

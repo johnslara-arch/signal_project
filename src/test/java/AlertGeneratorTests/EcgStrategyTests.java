@@ -9,46 +9,31 @@ import com.data_management.DataStorage;
 import com.data_management.PatientRecord;
 
 import java.util.List;
-import java.util.ArrayList;
 
 @DisplayName("EcgStrategy")
 public class EcgStrategyTests {
 
     /**
-     * The following subclass of the concrete strategy class overrides the
-     * triggerAlert method so that alerts produced by the following tests can be
-     * checked.
-     */
-    static class SpyStrategy extends EcgStrategy {
-        final List<Alert> captured = new ArrayList<>();
-
-        @Override
-        protected void triggerAlert(Alert alert) {
-            captured.add(alert);
-        }
-    }
-
-    /**
      * Case insensitive check that examines the kind of alerts the strategy
      * has created.
      * 
-     * @param spy       the SpyStrategy that created the alert.
+     * @param alerts    the list of alerts created by the strategy.
      * @param substring the kind of alert which should be found.
      * 
      * @return true if the expected substring is found in the alert created.
      */
-    private boolean containsCondition(SpyStrategy spy, String substring) {
-        return spy.captured.stream().anyMatch(a -> a.getCondition().toLowerCase().contains(substring.toLowerCase()));
+    private boolean containsCondition(List<Alert> alerts, String substring) {
+        return alerts.stream().anyMatch(a -> a.getCondition().toLowerCase().contains(substring.toLowerCase()));
     }
 
     DataStorage storage;
-    SpyStrategy spy;
+    EcgStrategy strategy;
 
     @BeforeEach
     void setUp() {
         DataStorage.resetInstance();
         this.storage = DataStorage.getInstance();
-        this.spy = new SpyStrategy();
+        this.strategy = new EcgStrategy();
     }
 
     @Test
@@ -61,8 +46,9 @@ public class EcgStrategyTests {
         }
         storage.addPatientData(1, 10.0, "ECG", 1000L + 20 * 100L); // abnormal peak
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
-        spy.checkAlert(records);
-        assertTrue(containsCondition(spy, "Abnormal ECG Peak"));
+
+        List<Alert> alerts = strategy.checkAlert(records);
+        assertTrue(containsCondition(alerts, "Abnormal ECG Peak"));
     }
 
     @Test
@@ -72,8 +58,8 @@ public class EcgStrategyTests {
             storage.addPatientData(1, 1.0, "ECG", 1000L + i * 100L);
         }
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
-        spy.checkAlert(records);
-        assertFalse(containsCondition(spy, "Abnormal ECG Peak"));
+        List<Alert> alerts = strategy.checkAlert(records);
+        assertFalse(containsCondition(alerts, "Abnormal ECG Peak"));
     }
 
     @Test
@@ -84,7 +70,7 @@ public class EcgStrategyTests {
         }
         storage.addPatientData(1, 10.0, "ECG", 1000L + 5 * 100L); // abnormal peak
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
-        spy.checkAlert(records);
-        assertFalse(containsCondition(spy, "Abnormal ECG Peak"));
+        List<Alert> alerts = strategy.checkAlert(records);
+        assertFalse(containsCondition(alerts, "Abnormal ECG Peak"));
     }
 }

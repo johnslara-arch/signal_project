@@ -1,9 +1,11 @@
 package com.alerts.AlertStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.alerts.AlertFactory.AlertFactory;
 import com.alerts.AlertFactory.EcgAlertFactory;
+import com.alerts.Alerts.Alert;
 import com.data_management.PatientRecord;
 
 public class EcgStrategy extends HelpersAlertStrategy {
@@ -23,11 +25,12 @@ public class EcgStrategy extends HelpersAlertStrategy {
      * @param allRecords patient records retrieved from {@DataStorage}.
      */
     @Override
-    public void checkAlert(List<PatientRecord> allRecords) {
+    public List<Alert> checkAlert(List<PatientRecord> allRecords) {
+        List<Alert> alerts = new ArrayList<>();
         List<PatientRecord> ecgRecords = filterByType(allRecords, "ECG");
 
         if (ecgRecords.size() < ECG_WINDOW_SIZE) {
-            return;
+            return alerts;
         }
 
         for (int i = ECG_WINDOW_SIZE; i < ecgRecords.size(); i++) {
@@ -38,11 +41,13 @@ public class EcgStrategy extends HelpersAlertStrategy {
             average = average / ECG_WINDOW_SIZE;
 
             if (average > 0 && ecgRecords.get(i).getMeasurementValue() > ECG_PEAK_MULTIPLIER * average) {
-                triggerAlert(ecgAlertFactory.createAlert(String.valueOf(ecgRecords.get(i).getPatientId()),
+                alerts.add(ecgAlertFactory.createAlert(String.valueOf(ecgRecords.get(i).getPatientId()),
                         "Abnormal ECG peak detected: " + ecgRecords.get(i).getMeasurementValue(),
                         ecgRecords.get(i).getTimestamp()));
             }
         }
+
+        return alerts;
 
     }
 

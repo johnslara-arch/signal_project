@@ -29,17 +29,4 @@ public abstract class HelpersAlertStrategy implements AlertStrategy {
         return filtered;
     }
 
-    /**
-     * Triggers an alert for the monitoring system. This method can be extended to
-     * notify medical staff, log the alert, or perform other actions. The method
-     * currently assumes that the alert information is fully formed when passed as
-     * an argument.
-     *
-     * @param alert the alert object containing details about the alert condition
-     */
-    protected void triggerAlert(Alert alert) {
-        System.out.printf("ALERT -> Patient ID: %s | Condition: %s | Time: %d%n", alert.getPatientId(),
-                alert.getCondition(), alert.getTimestamp());
-    }
-
 }
