@@ -1,7 +1,7 @@
 package com.alerts.Alerts;
 
 // Represents an alert
-public class Alert {
+public abstract class Alert {
     private String patientId;
     private String condition;
     private long timestamp;
@@ -24,7 +24,5 @@ public class Alert {
         return timestamp;
     }
 
-    public String getAlertType() {
-        return "Alert";
-    }
+    public abstract String getAlertType();
 }

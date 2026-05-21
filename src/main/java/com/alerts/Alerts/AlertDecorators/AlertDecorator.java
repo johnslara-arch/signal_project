@@ -11,4 +11,9 @@ public abstract class AlertDecorator extends Alert {
         this.decoratedAlert = alert;
     }
 
+    @Override
+    public String getAlertType() {
+        return decoratedAlert.getAlertType();
+    }
+
 }
