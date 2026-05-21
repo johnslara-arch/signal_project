@@ -31,7 +31,7 @@ public class WebSocketOutputStrategy implements OutputStrategy {
 
     /**
      * Sends the generated data to all clients currently connected to the server.
-     * Data is written in the format "patientId, timestamo, label, data".
+     * Data is written in the format "patientId, timestamp, label, data".
      * 
      * @param patientId the ID of the patient for whom the data is generated.
      * @param timestamp the timestamp of the generated data.

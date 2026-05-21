@@ -1,3 +1,5 @@
+package data_management;
+
 import com.cardio_generator.outputs.WebSocketClient;
 import com.data_management.DataStorage;
 import com.data_management.PatientRecord;
@@ -113,7 +115,7 @@ public class WebSocketClientTests {
     // Testing for parseData method!
 
     @Test
-    @DisplayName("Check all types of measurment values still get parsed correctly.")
+    @DisplayName("Check all types of measurement values still get parsed correctly.")
     void correctParseDataMethod() throws Exception {
         assertEquals(75.0, parseDataValue("75.0")); // Tests for normal numbers
         assertEquals(95.0, parseDataValue("95.0%")); // Tests for saturation values with %
@@ -123,21 +125,4 @@ public class WebSocketClientTests {
         assertEquals(75.0, parseDataValue("75")); // Tests for lack of decimal point conversion
     }
 
-    // Integration testing - WARNING this requires a live server.
-    // Tested by starting the signal generator with websocket:2121.
-
-    @Test
-    @DisplayName("Checks connection to a live server and correct data reception.")
-    @Disabled("Only run manually once the server on ws://localhost:8080 has been started.")
-    void integrationWithServerTest() throws Exception {
-        com.data_management.DataReaderWebSocket reader = new com.data_management.DataReaderWebSocket(
-                URI.create("ws://localhost:2121"));
-        reader.readData(storage);
-
-        Thread.sleep(5000L); // Leave the connection open for a short time to receive some data
-        reader.stopConnectionToServer();
-
-        assertFalse(storage.getAllPatients().isEmpty()); // Some records should be stored after 3 seconds of
-                                                         // connection to the server
-    }
 }

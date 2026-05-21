@@ -2,7 +2,6 @@ package com.cardio_generator.outputs;
 
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.io.IOException;
 import java.net.URI;
 import com.data_management.DataStorage;
 
@@ -28,12 +27,12 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
     public void onMessage(String message) {
         try {
             parseLine(message, storage);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.err.println("Unexpected format found, skipping message: " + message + " - " + e.getMessage());
         }
     }
 
-    // Called when connection is closed. Tries to
+    // Called when connection is closed. Tries to reconnect to server if unexpected.
     @Override
     public void onClose(int code, String reason, boolean remote) {
         System.out.println("Disconnected from WebSocket server.");
