@@ -23,7 +23,7 @@ public class HypotensiveHypoxemiaStrategy extends HelpersAlertStrategy {
     @Override
     public List<Alert> checkAlert(List<PatientRecord> allRecords) {
         List<Alert> alerts = new ArrayList<>();
-        List<PatientRecord> systolicRecords = filterByType(allRecords, "Systolic");
+        List<PatientRecord> systolicRecords = filterByType(allRecords, "SystolicPressure");
         List<PatientRecord> saturationRecords = filterByType(allRecords, "Saturation");
 
         for (PatientRecord systolicRecord : systolicRecords) {

@@ -8,7 +8,6 @@ import com.alerts.Alerts.Alert;
 import com.data_management.DataStorage;
 import com.data_management.PatientRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @DisplayName("HypotensiveHypoxemiaStrategy")
@@ -41,7 +40,7 @@ public class HypotensiveHypoxemiaStrategyTests {
     @DisplayName("Creates hypotensive hypoxemia alert when conditions are met simultaneously.")
     void conditionsMetSimultaneously() {
         long time = System.currentTimeMillis();
-        storage.addPatientData(1, 85, "Systolic", time - 30_000L);
+        storage.addPatientData(1, 85, "SystolicPressure", time - 30_000L);
         storage.addPatientData(1, 90, "Saturation", time);
         List<PatientRecord> records = storage.getRecords(1, 0L, time + 1000L);
         List<Alert> alerts = strategy.checkAlert(records);
