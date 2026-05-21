@@ -43,7 +43,7 @@ public class AlertGenerator {
      *
      * @param patient the patient data to evaluate for alert conditions
      */
-    public void evaluateData(Patient patient) {
+    public List<Alert> evaluateData(Patient patient) {
         long currentTime = System.currentTimeMillis();
         List<PatientRecord> allRecords = patient.getRecords(0, currentTime);
 
@@ -58,6 +58,8 @@ public class AlertGenerator {
         for (Alert alert : alerts) {
             triggerAlert(alert);
         }
+
+        return alerts;
     }
 
     /**
