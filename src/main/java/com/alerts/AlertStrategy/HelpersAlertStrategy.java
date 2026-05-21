@@ -3,7 +3,6 @@ package com.alerts.AlertStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.alerts.Alerts.Alert;
 import com.data_management.PatientRecord;
 
 public abstract class HelpersAlertStrategy implements AlertStrategy {
