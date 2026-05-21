@@ -80,3 +80,7 @@ Four UML Class diagrams that represent the Alert Generation System, Data Storage
 
 A code coverage report of the unit tests added for Part 3 of the project can be found in the [Code_coverage_and_unit_tests](https://github.com/johnslara-arch/signal_project/tree/master/Code_coverage_and_unit_tests) directory. This directory also contains screenshots proving the 
 successful completion of all unit tests.
+
+## Style fixes 
+
+In line style fix comments were added to the AlertGenerator.java and FileOutputStrategy.java which can be in the [generators](https://github.com/johnslara-arch/signal_project/tree/master/src/main/java/com/cardio_generator/generators) and [outputs](https://github.com/johnslara-arch/signal_project/tree/master/src/main/java/com/cardio_generator/outputs) directories respectively. The fixes are in line with the Google Java Style Guide which can be found [here](https://google.github.io/styleguide/javaguide.html).

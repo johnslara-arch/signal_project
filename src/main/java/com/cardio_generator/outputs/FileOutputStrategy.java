@@ -8,12 +8,16 @@ import java.nio.file.StandardOpenOption;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *  This class implements the OutputStrategy interface to write generated data to files.
+ * This class implements the OutputStrategy interface to write generated data to
+ * files.
  */
 public class FileOutputStrategy implements OutputStrategy {
 
-    // Changed variable name to lowerCamelCase.
+    // google java style (s5.2.5): non-constant field names should be in
+    // lowerCamelCase.
+    // Changed field names to lowerCamelCase as neither are constants.
     private String baseDirectory;
+    public final ConcurrentHashMap<String, String> fileMap = new ConcurrentHashMap<>();
 
     /**
      * Constructor for FileOutputStrategy. Initialises the base directory where
@@ -25,17 +29,13 @@ public class FileOutputStrategy implements OutputStrategy {
         this.baseDirectory = baseDirectory; // Vertical space removed as did not improve readability.
     }
 
-    //Changed variable name to lowerCamelCase.
-    // Moved fileMap declaration closer to the point it is first used as per 4.8.2.2 in Guide.
-    public final ConcurrentHashMap<String, String> fileMap = new ConcurrentHashMap<>();
-
     /**
      * Outputs the generated data to a chosen file.
      * 
      * @param patientId the ID of the patient for whom the data is generated.
      * @param timestamp the timestamp of the generated data.
-     * @param label the label for the generated data.
-     * @param data the generated data.
+     * @param label     the label for the generated data.
+     * @param data      the generated data.
      * @throws IOException if an error occurs while creating or writing tothe file.
      */
     @Override
@@ -48,7 +48,8 @@ public class FileOutputStrategy implements OutputStrategy {
             return;
         }
         // Set the FilePath variable
-        //Changed variable name to lowerCamelCase.
+        // google java style (s5.2.7): local variable names should be in lowerCamelCase.
+        // Changed variable name to lowerCamelCase.
         String filePath = fileMap.computeIfAbsent(label, k -> Paths.get(baseDirectory, label + ".txt").toString());
 
         // Write the data to the file
