@@ -8,7 +8,6 @@ import com.alerts.Alerts.Alert;
 import com.data_management.DataStorage;
 import com.data_management.PatientRecord;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @DisplayName("BloodSaturationStrategy")
@@ -60,7 +59,7 @@ public class BloodSaturationStrategyTests {
     @DisplayName("Creates rapid drop alert when saturation drops by 5% or more within 10 minutes.")
     void rapidSaturationDropAlertCreated() {
         long time = System.currentTimeMillis();
-        storage.addPatientData(1, 98, "Saturation", time - 3 * 60 * 1000L); // 3 mins ago
+        storage.addPatientData(1, 98, "Saturation", time - 3 * 60 * 1000L); // Measurement recorded 3 minutes ago.
         storage.addPatientData(1, 93, "Saturation", time);
         List<PatientRecord> records = storage.getRecords(1, 0L, time + 1000L);
         List<Alert> alerts = strategy.checkAlert(records);
@@ -71,7 +70,7 @@ public class BloodSaturationStrategyTests {
     @DisplayName("Does not create rapid drop alert when the drop occurs over more than 10 minutes.")
     void longerThan10Minutes() {
         long time = System.currentTimeMillis();
-        storage.addPatientData(1, 98, "Saturation", time - 15 * 60 * 1000L); // 15 mins ago
+        storage.addPatientData(1, 98, "Saturation", time - 15 * 60 * 1000L); // Measurement recorded 15 minutes ago.
         storage.addPatientData(1, 93, "Saturation", time);
         List<PatientRecord> records = storage.getRecords(1, 0L, time + 1000L);
         List<Alert> alerts = strategy.checkAlert(records);

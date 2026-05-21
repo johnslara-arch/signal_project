@@ -21,7 +21,7 @@ public class BloodPressureStrategy extends HelpersAlertStrategy {
      * or above 180 mmHg,
      * or when diastolic BP falls under 60 mmHg or above 120 mmHg.
      * 
-     * @param allRecords patient records retrieved from {@DataStorage}.
+     * @param allRecords patient records retrieved from {@Link DataStorage}.
      */
     @Override
     public List<Alert> checkAlert(List<PatientRecord> allRecords) {

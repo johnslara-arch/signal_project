@@ -31,7 +31,7 @@ public class DataReaderOutputFile implements DataReader {
      * 
      * @param dataStorage the place where valid records are stored.
      * 
-     * @throws IOException is the directory cannot be read or file cannot be opened.
+     * @throws IOException if the directory cannot be read or file cannot be opened.
      */
     @Override
     public void readData(DataStorage dataStorage) throws IOException {

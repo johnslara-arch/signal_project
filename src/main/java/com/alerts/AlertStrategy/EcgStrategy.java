@@ -22,7 +22,7 @@ public class EcgStrategy extends HelpersAlertStrategy {
      * have been assumed to be 2 and 20 respectively. Triggers an alert when
      * this condition is met.
      * 
-     * @param allRecords patient records retrieved from {@DataStorage}.
+     * @param allRecords patient records retrieved from {@Link DataStorage}.
      */
     @Override
     public List<Alert> checkAlert(List<PatientRecord> allRecords) {

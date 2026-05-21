@@ -18,7 +18,7 @@ public class HypotensiveHypoxemiaStrategy extends HelpersAlertStrategy {
      * and blood saturation levels are below 92% at the same time (defined time
      * proximity as records occuring within a minute of one another).
      * 
-     * @param allRecords patient records retrieved from {@DataStorage}.
+     * @param allRecords patient records retrieved from {@Link DataStorage}.
      */
     @Override
     public List<Alert> checkAlert(List<PatientRecord> allRecords) {

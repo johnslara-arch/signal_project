@@ -44,7 +44,8 @@ public class EcgStrategyTests {
         for (int i = 0; i < 20; i++) {
             storage.addPatientData(1, 1.0, "ECG", 1000L + i * 100L);
         }
-        storage.addPatientData(1, 10.0, "ECG", 1000L + 20 * 100L); // abnormal peak
+        storage.addPatientData(1, 10.0, "ECG", 1000L + 20 * 100L); // peak significantly exceeding sliding window
+                                                                   // average
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
 
         List<Alert> alerts = strategy.checkAlert(records);
@@ -68,7 +69,7 @@ public class EcgStrategyTests {
         for (int i = 0; i < 5; i++) {
             storage.addPatientData(1, 1.0, "ECG", 1000L + i * 100L);
         }
-        storage.addPatientData(1, 10.0, "ECG", 1000L + 5 * 100L); // abnormal peak
+        storage.addPatientData(1, 10.0, "ECG", 1000L + 5 * 100L); // peak significantly exceeding sliding window average
         List<PatientRecord> records = storage.getRecords(1, 0L, 4000L);
         List<Alert> alerts = strategy.checkAlert(records);
         assertFalse(containsCondition(alerts, "Abnormal ECG Peak"));
