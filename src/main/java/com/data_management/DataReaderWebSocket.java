@@ -25,14 +25,9 @@ public class DataReaderWebSocket implements DataReader {
         }
     }
 
-    public void stopConnectionToServer() throws IOException {
+    public void stopConnectionToServer() {
         if (client != null) {
-            try {
-                client.closeBlocking();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                throw new IOException("WebSocket disconnection was interrupted: " + e.getMessage(), e);
-            }
+            client.shutdown();
         }
     }
 

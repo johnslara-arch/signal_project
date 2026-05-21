@@ -79,7 +79,7 @@ Four UML Class diagrams that represent the Alert Generation System, Data Storage
 ## Code Coverage Report and Unit Tests
 
 A code coverage report of the unit tests added for Part 3 of the project can be found in the [Code_coverage_and_unit_tests](https://github.com/johnslara-arch/signal_project/tree/master/Code_coverage_and_unit_tests) directory. This directory also contains screenshots proving the 
-successful completion of all unit tests.
+successful completion of all unit tests. Additional tests added after feedback were put in the Part 5 document to reflect later addition.
 
 ## Style fixes 
 

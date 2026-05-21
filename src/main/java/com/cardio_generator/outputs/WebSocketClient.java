@@ -1,12 +1,15 @@
 package com.cardio_generator.outputs;
 
 import org.java_websocket.handshake.ServerHandshake;
+
+import java.io.IOException;
 import java.net.URI;
 import com.data_management.DataStorage;
 
 public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
 
     private final DataStorage storage;
+    private boolean manuallyClosed = false;
 
     // Constructor takes a URI
     public WebSocketClient(URI serverUri, DataStorage dataStorage) {
@@ -30,10 +33,34 @@ public class WebSocketClient extends org.java_websocket.client.WebSocketClient {
         }
     }
 
-    // Called when connection is closed
+    // Called when connection is closed. Tries to
     @Override
     public void onClose(int code, String reason, boolean remote) {
         System.out.println("Disconnected from WebSocket server.");
+
+        // If the server disconnected unexpectedly try to reconnect.
+        if (!manuallyClosed) {
+            tryToReconnect();
+        }
+    }
+
+    // Notifies client object that connection was closed manually.
+    public void shutdown() {
+        manuallyClosed = true;
+        close();
+    }
+
+    // Attempts to reconnect client to server if unexpectedly disconnected.
+    public void tryToReconnect() {
+        System.out.println("Trying to reconnect to server...");
+
+        try {
+            Thread.sleep(3000);
+            reconnect();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("WebSocket reconnection was interrupted: " + e.getMessage());
+        }
     }
 
     // Called on error
