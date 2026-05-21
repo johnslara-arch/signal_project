@@ -1,6 +1,7 @@
 package com.data_management;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,17 +12,20 @@ import java.util.List;
  */
 public class Patient {
     private int patientId;
-    private List<PatientRecord> patientRecords;
+    private final List<PatientRecord> patientRecords;
 
     /**
      * Constructs a new Patient with a specified ID.
      * Initializes an empty list of patient records.
+     * 
+     * Synchronized list is used to make PatientRecord thread safe after
+     * the implementation of the WebSocket output.
      *
      * @param patientId the unique identifier for the patient
      */
     public Patient(int patientId) {
         this.patientId = patientId;
-        this.patientRecords = new ArrayList<>();
+        this.patientRecords = Collections.synchronizedList(new ArrayList<>());
     }
 
     /**

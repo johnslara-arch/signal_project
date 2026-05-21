@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.alerts.AlertGenerator;
 
 /**
@@ -15,14 +17,16 @@ import com.alerts.AlertGenerator;
  */
 public class DataStorage {
     private static DataStorage instance;
-    private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
+    private final Map<Integer, Patient> patientMap; // Stores patient objects indexed by
+                                                    // their unique patient ID.
 
     /**
      * Constructs a new instance of DataStorage, initializing the underlying storage
-     * structure.
+     * structure. Concurrent HashMap is used to make DataStorage thread safe after
+     * the implementation of the WebSocket output.
      */
     private DataStorage() {
-        this.patientMap = new HashMap<>();
+        this.patientMap = new ConcurrentHashMap<>();
     }
 
     /**
@@ -51,6 +55,10 @@ public class DataStorage {
      * If the patient does not exist, a new Patient object is created and added to
      * the storage.
      * Otherwise, the new data is added to the existing patient's records.
+     * 
+     * Current limitation of this method is the lack of check for duplicate data.
+     * With additional time could add a checker for records already in the chosen
+     * storage instance. Methods would be added to PatientRecord to check this.
      *
      * @param patientId        the unique identifier of the patient
      * @param measurementValue the value of the health metric being recorded
