@@ -9,7 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class implements the OutputStrategy interface to write generated data to
- * files.
+ * text files.
+ * 
+ * Each type of data (ECG, Blood Pressure...) is recorded in a separate file.
+ * These files are created inside the base directory if they don't exist or
+ * added to each time new data is registered.
  */
 public class FileOutputStrategy implements OutputStrategy {
 
@@ -21,7 +25,7 @@ public class FileOutputStrategy implements OutputStrategy {
 
     /**
      * Constructor for FileOutputStrategy. Initialises the base directory where
-     * files will be written.
+     * files will be written, creates a new one if it doesn't exist.
      * 
      * @param baseDirectory the directory where files will be written.
      */
@@ -30,13 +34,17 @@ public class FileOutputStrategy implements OutputStrategy {
     }
 
     /**
-     * Outputs the generated data to a chosen file.
+     * Adds the generated data to its respective file in the base directory. Data is
+     * written in the format "Patient ID: id, Timestamp: time, Label: label, Data:
+     * data".
+     * 
+     * Side effect: If directory and files don't exist on the local file system they
+     * are created.
      * 
      * @param patientId the ID of the patient for whom the data is generated.
      * @param timestamp the timestamp of the generated data.
      * @param label     the label for the generated data.
      * @param data      the generated data.
-     * @throws IOException if an error occurs while creating or writing tothe file.
      */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {

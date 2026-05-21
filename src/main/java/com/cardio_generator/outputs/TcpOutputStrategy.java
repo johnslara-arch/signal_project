@@ -7,7 +7,11 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 
 /**
- * This class implements the OutputStrategy interface to send patient data to a connected client over a TCP socket.
+ * This class implements the OutputStrategy interface to send patient data to a
+ * connected client over a TCP socket.
+ * 
+ * A TCP server socket is opened and waits for a client to connect. Once this
+ * occurs the patient data is transmitted to the client.
  */
 public class TcpOutputStrategy implements OutputStrategy {
 
@@ -16,10 +20,11 @@ public class TcpOutputStrategy implements OutputStrategy {
     private PrintWriter out;
 
     /**
-     * Constructor for TcpOutputStrategy. Initialises the server socket and waits for a client to connect.
+     * Constructor for TcpOutputStrategy. Initialises the server socket and waits
+     * for a client to connect.
      * 
-     * @param port the port on which the server will listen for incoming connections from clients.
-     * @throws IOException if an error occurs while creating the server socket or accepting a client connection.
+     * @param port the port on which the server will listen for incoming connections
+     *             from clients.
      */
     public TcpOutputStrategy(int port) {
         try {
@@ -42,12 +47,14 @@ public class TcpOutputStrategy implements OutputStrategy {
     }
 
     /**
-     * Outputs the generated data to the connected client.
+     * Outputs the generated data to the connected TCP client. Data is sent in the
+     * format: "patientId, timestamp, label, data". The incoming data is useless
+     * unless there is a client connection.
      * 
      * @param patientId the ID of the patient for whom the data is generated.
      * @param timestamp the timestamp of the generated data.
-     * @param label the label for the generated data.
-     * @param data the generated data.
+     * @param label     the label for the generated data.
+     * @param data      the generated data.
      */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
