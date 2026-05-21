@@ -4,11 +4,25 @@ import java.util.Random;
 
 import com.cardio_generator.outputs.OutputStrategy;
 
+/**
+ * This class implements the PatientDataGenerator interface to ECG data for
+ * patients.
+ * 
+ * The generator maintains the ECG data for each patient. It then
+ * calculates a new ECG value by simulating an ECG waveform to make realistic
+ * predictions.
+ */
 public class ECGDataGenerator implements PatientDataGenerator {
     private static final Random random = new Random();
     private double[] lastEcgValues;
     private static final double PI = Math.PI;
 
+    /**
+     * Constructor to initialise the ECG data generator for a given
+     * number of patients. It initialises prior ECG values to 0 for each patient.
+     * 
+     * @param patientCount the number of patients for whom to generate data.
+     */
     public ECGDataGenerator(int patientCount) {
         lastEcgValues = new double[patientCount + 1];
         // Initialize the last ECG value for each patient
@@ -17,9 +31,16 @@ public class ECGDataGenerator implements PatientDataGenerator {
         }
     }
 
+    /**
+     * Generates ECG data for a given patient and outputs it using the
+     * provided OutputStrategy. It simulates fluctuations by calculating a new ECG
+     * value from a smulated ECG waveform to maintain realistic values.
+     * 
+     * @param patientId      the ID of the patient for whom to generate data.
+     * @param outputStrategy the strategy to use for outputting the generated data.
+     */
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {
-        // TODO Check how realistic this data is and make it more realistic if necessary
         try {
             double ecgValue = simulateEcgWaveform(patientId, lastEcgValues[patientId]);
             outputStrategy.output(patientId, System.currentTimeMillis(), "ECG", Double.toString(ecgValue));
@@ -30,6 +51,14 @@ public class ECGDataGenerator implements PatientDataGenerator {
         }
     }
 
+    /**
+     * Generates the new ECG value by simulating an ECG waveform.
+     * 
+     * @param patientId    the id of the patient the data is being recorded for.
+     * @param lastEcgValue the previous recorded ECG value.
+     * 
+     * @return the new ECG value as a double.
+     */
     private double simulateEcgWaveform(int patientId, double lastEcgValue) {
         // Simplified ECG waveform generation based on sinusoids
         double hr = 60.0 + random.nextDouble() * 20.0; // Simulate heart rate variability between 60 and 80 bpm

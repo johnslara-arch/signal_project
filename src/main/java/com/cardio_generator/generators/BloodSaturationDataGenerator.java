@@ -5,15 +5,22 @@ import java.util.Random;
 import com.cardio_generator.outputs.OutputStrategy;
 
 /**
- * This class implements the PatientDataGenerator interface to generate blood saturation data for patients.
+ * This class implements the PatientDataGenerator interface to generate blood
+ * oxygen saturation data for patients.
+ * 
+ * The generator maintains a prior saturation value for every patient and
+ * applies minute random fluctuations over time so the changes viewed in the
+ * simulated data are realistic. Generated values are constrained to stay within
+ * the realistic range of 90% to 100%.
  */
 public class BloodSaturationDataGenerator implements PatientDataGenerator {
     private static final Random random = new Random();
     private int[] lastSaturationValues;
 
     /**
-     * Constructor to initialise the blood saturation data generator for a given number of patients. It initialises 
-     * a baseline saturation value for each patient, between 95% and 100%.
+     * Constructor to initialise the blood saturation data generator for a given
+     * number of patients. It initialises a baseline saturation value for each
+     * patient, between 95% and 100%.
      * 
      * @param patientCount the number of patients for whom to generate data.
      */
@@ -27,12 +34,12 @@ public class BloodSaturationDataGenerator implements PatientDataGenerator {
     }
 
     /**
-     * Generates blood saturation data for a given patient and outputs it using the provided OutputStrategy. It simulates
-     * small fluctuations in values while maintaining them within a realistic range (90% to 100%). 
+     * Generates blood saturation data for a given patient and outputs it using the
+     * provided OutputStrategy. It simulates small fluctuations in values while
+     * maintaining them within a realistic range (90% to 100%).
      * 
-     * @param patientId the ID of the patient for whom to generate data.
+     * @param patientId      the ID of the patient for whom to generate data.
      * @param outputStrategy the strategy to use for outputting the generated data.
-     * @throws Exception if an error occurs during data generation or output.
      */
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {

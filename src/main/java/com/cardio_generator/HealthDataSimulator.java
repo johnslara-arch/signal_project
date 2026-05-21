@@ -26,11 +26,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
- * Represents a health data simulator. It schedules various types of health data
- * such as ECG data to be
+ * Represents a health data simulator. It is one of the two main entry points
+ * for the health monitoring simulation system (along with {@Link DataStorage}.
+ * 
+ * It schedules various types of health data such as ECG data to be
  * generated for a specified number of patients and output strategy. Specifies
- * these parameters through command-
- * line arguments.
+ * these parameters through command-line arguments. Supported output strategies
+ * include file outputm TCP socket and WebSocket streaming, and console output.
  */
 public class HealthDataSimulator {
 
@@ -41,10 +43,11 @@ public class HealthDataSimulator {
     private static final Random random = new Random();
 
     /**
-     * This method ensures Singleton design pattern as it only
-     * creates a new instance of this simulator if none exists.
+     * This method ensures Singleton design pattern as it only creates a new
+     * instance of this simulator if none exists. Otherwise returns existing
+     * instance.
      * 
-     * @return new or existing instance of simulator.
+     * @return singleton instance of simulator.
      */
     public static HealthDataSimulator getInstance() {
         if (instance == null) {
@@ -54,11 +57,13 @@ public class HealthDataSimulator {
     }
 
     /**
-     * Main method to start the Health Data Simulator. It generates patient IDs
-     * for the specified amount and schedules tasks for each patient.
+     * Main method to start the Health Data Simulator. It parses command-line
+     * arguments, then generates patient IDs for the specified amount and schedules
+     * tasks for each patient.
      * 
-     * @param args arguments used to configure the simulator (e.g. patient count).
-     * @throws IOException handles output exceptions.
+     * @param args command-line arguments used to configure the simulator (e.g.
+     *             patient count).
+     * @throws IOException if output directories can't be created.
      */
     public static void main(String[] args) throws IOException {
 
@@ -141,7 +146,8 @@ public class HealthDataSimulator {
 
     /**
      * Prints a help message to the console, detailing how to input specific
-     * arguments to configure the simulator.
+     * arguments to configure the simulator. It also describes all supported
+     * options.
      */
     private static void printHelp() {
         System.out.println("Usage: java HealthDataSimulator [options]");

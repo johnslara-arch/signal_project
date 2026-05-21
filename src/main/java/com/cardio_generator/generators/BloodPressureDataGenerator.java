@@ -4,12 +4,31 @@ import java.util.Random;
 
 import com.cardio_generator.outputs.OutputStrategy;
 
+/**
+ * This class implements the PatientDataGenerator interface to generate blood
+ * pressure data for patients. Two types of blood pressure are recorded,
+ * Systolic and Diastolic blood pressure.
+ * 
+ * The generator maintains the prior blood pressure for each patient. It then
+ * applies small variations to each prior blood pressure value so the simulated
+ * values over time emulate realistic changes to patient levels.
+ */
 public class BloodPressureDataGenerator implements PatientDataGenerator {
     private static final Random random = new Random();
 
     private int[] lastSystolicValues;
     private int[] lastDiastolicValues;
 
+    /**
+     * Constructor to initialise the blood pressure data generator for a given
+     * number of patients. It initialises a random baseline value for each
+     * patient's systolic and diastolic blood pressure.
+     * 
+     * Baseline systolic values range between 110 and 130.
+     * Baseline diastolic values range between 70 and 85.
+     * 
+     * @param patientCount the number of patients for whom to generate data.
+     */
     public BloodPressureDataGenerator(int patientCount) {
         lastSystolicValues = new int[patientCount + 1];
         lastDiastolicValues = new int[patientCount + 1];
@@ -21,6 +40,19 @@ public class BloodPressureDataGenerator implements PatientDataGenerator {
         }
     }
 
+    /**
+     * Generates blood pressure data for a given patient and outputs it using the
+     * provided OutputStrategy. It simulates small fluctuations in prior values
+     * while maintaining them within a realistic range.
+     * 
+     * Fluctuations for systolic and diastolic values range from -2 to +2.
+     * 
+     * Accepted range for systolic is between 90 and 180.
+     * Accepted range for diastolic is between 60 and 120.
+     * 
+     * @param patientId      the ID of the patient for whom to generate data.
+     * @param outputStrategy the strategy to use for outputting the generated data.
+     */
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {
         try {
